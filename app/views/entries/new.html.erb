@@ -1,21 +1,32 @@
 <h1>New Entry</h1>
 
+<% if @entry&.errors&.any? %>
+  <div class="alert alert-danger">
+    <p class="mb-2">Please fix the following:</p>
+    <ul class="mb-0">
+      <% @entry.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <form action="/entries" method="post" enctype="multipart/form-data" class="mt-4">
-  <input type="hidden" name="place_id" value="<%= params["place_id"] %>">
+  <input type="hidden" name="place_id" value="<%= @entry&.place_id || params["place_id"] %>">
 
   <div class="mb-3">
     <label for="title_input" class="form-label">Title</label>
-    <input type="text" name="title" id="title_input" class="form-control">
+    <input type="text" name="title" id="title_input" class="form-control" value="<%= @entry&.title %>" required>
   </div>
 
   <div class="mb-3">
     <label for="description_input" class="form-label">Description</label>
-    <textarea name="description" id="description_input" class="form-control" rows="4"></textarea>
+    <textarea name="description" id="description_input" class="form-control" rows="4" required><%= @entry&.description %></textarea>
   </div>
 
   <div class="mb-3">
     <label for="occurred_on_input" class="form-label">Occurred On</label>
-    <input type="date" name="occurred_on" id="occurred_on_input" class="form-control">
+    <input type="date" name="occurred_on" id="occurred_on_input" class="form-control" value="<%= @entry&.occurred_on %>" required>
   </div>
 
   <div class="mb-3">

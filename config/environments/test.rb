@@ -33,6 +33,9 @@ Rails.application.configure do
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
 
+  # Store uploaded files on a separate temporary filesystem location in test.
+  config.active_storage.service = :test
+
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 
